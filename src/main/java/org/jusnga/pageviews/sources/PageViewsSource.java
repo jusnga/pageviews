@@ -1,4 +1,4 @@
-package org.jusnga.pageviews.io;
+package org.jusnga.pageviews.sources;
 
 import org.jusnga.pageviews.DateAndHour;
 import org.jusnga.pageviews.PageViews;

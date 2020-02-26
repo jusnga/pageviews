@@ -22,6 +22,22 @@ public final class DateAndHour {
         return date;
     }
 
+    public int getYear() {
+        return date.getYear();
+    }
+
+    public int getMonth() {
+        return date.getMonthOfYear();
+    }
+
+    @Override
+    public String toString() {
+        return "DateAndHour{" +
+                "date=" + date +
+                ", hour=" + hour +
+                '}';
+    }
+
     public static DateAndHour from(LocalDate date, int hour) {
         return new DateAndHour(date, hour);
     }

@@ -1,9 +1,8 @@
-package org.jusnga.pageviews.io.dumpswikimedia;
+package org.jusnga.pageviews.sources.dumpswikimedia;
 
-import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
-import org.joda.time.LocalTime;
 import org.jusnga.pageviews.DateAndHour;
+import org.jusnga.pageviews.utils.LocalDateTimeUtils;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -25,27 +24,36 @@ public final class PageViewsLocator {
         URL basePath = new URL(BASE_URL);
         URL yearPath = new URL(basePath, dateTime.getYear() + "/");
         URL monthPath = new URL(yearPath, dateTime.toString(YEAR_MONTH_PATH_FMT) + "/");
-        return new URL(monthPath, getFileName(dateTime));
+        return new URL(monthPath, getFileName());
+    }
+
+    public LocalDateTime getDateTime() {
+        return dateTime;
+    }
+
+    public int getYear() {
+        return dateTime.getYear();
+    }
+
+    public int getMonth() {
+        return dateTime.getMonthOfYear();
+    }
+
+    public String getFileName() {
+        return String.format(PAGE_VIEW_FILE_FMT, dateTime.toString(PAGE_VIEW_DATE_FMT));
     }
 
     public static PageViewsLocator getLocator(DateAndHour dateAndHour) {
-        int hour = dateAndHour.getHour();
-        LocalDate date = dateAndHour.getDate();
-
-        LocalDateTime dateTime = date.toLocalDateTime(LocalTime.MIDNIGHT).plusHours(hour);
+        LocalDateTime dateTime = LocalDateTimeUtils.toDateTime(dateAndHour);
 
         return new PageViewsLocator(dateTime);
-    }
-
-    private static String getFileName(LocalDateTime dateTime) {
-        return String.format(PAGE_VIEW_FILE_FMT, dateTime.toString(PAGE_VIEW_DATE_FMT));
     }
 
     @Override
     public String toString() {
         return "PageViewsLocator{" +
                 "dateTime=" + dateTime + ", " +
-                "fileName=" + getFileName(dateTime) +
+                "fileName=" + getFileName() +
                 '}';
     }
 }

@@ -1,4 +1,4 @@
-package org.jusnga.pageviews.io.dumpswikimedia;
+package org.jusnga.pageviews.sources.dumpswikimedia;
 
 import com.google.common.io.CountingInputStream;
 import org.jusnga.pageviews.PageViews;
