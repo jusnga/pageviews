@@ -1,6 +1,8 @@
 package org.jusnga.pageviews;
 
 import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
+import org.joda.time.LocalTime;
 
 public final class DateAndHour {
     private final LocalDate date;
@@ -38,7 +40,10 @@ public final class DateAndHour {
                 '}';
     }
 
-    public static DateAndHour from(LocalDate date, int hour) {
-        return new DateAndHour(date, hour);
+    public static LocalDateTime toLocalDateTime(DateAndHour dateAndHour) {
+        LocalDate date = dateAndHour.getDate();
+        int hour = dateAndHour.getHour();
+
+        return date.toLocalDateTime(LocalTime.MIDNIGHT).plusHours(hour);
     }
 }

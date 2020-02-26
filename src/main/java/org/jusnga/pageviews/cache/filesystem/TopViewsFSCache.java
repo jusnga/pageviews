@@ -4,7 +4,6 @@ import org.jusnga.pageviews.DateAndHour;
 import org.jusnga.pageviews.TopPageViews;
 import org.jusnga.pageviews.cache.ResultCache;
 import org.jusnga.pageviews.cache.filesystem.utils.FSUtils;
-import org.jusnga.pageviews.utils.LocalDateTimeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -61,7 +60,7 @@ public class TopViewsFSCache implements ResultCache<DateAndHour, TopPageViews> {
     }
 
     private String getTopViewsFileName(DateAndHour key) {
-        String fileName = LocalDateTimeUtils.toDateTime(key).toString(TOP_VIEWS_DATE_TIME_FMT);
+        String fileName = DateAndHour.toLocalDateTime(key).toString(TOP_VIEWS_DATE_TIME_FMT);
 
         return String.format(TOP_VIEWS_FILE_FMT, fileName);
     }

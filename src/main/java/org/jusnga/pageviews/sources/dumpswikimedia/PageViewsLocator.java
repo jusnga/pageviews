@@ -2,7 +2,6 @@ package org.jusnga.pageviews.sources.dumpswikimedia;
 
 import org.joda.time.LocalDateTime;
 import org.jusnga.pageviews.DateAndHour;
-import org.jusnga.pageviews.utils.LocalDateTimeUtils;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -44,7 +43,7 @@ public final class PageViewsLocator {
     }
 
     public static PageViewsLocator getLocator(DateAndHour dateAndHour) {
-        LocalDateTime dateTime = LocalDateTimeUtils.toDateTime(dateAndHour);
+        LocalDateTime dateTime = DateAndHour.toLocalDateTime(dateAndHour);
 
         return new PageViewsLocator(dateTime);
     }
