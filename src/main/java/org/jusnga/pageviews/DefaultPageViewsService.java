@@ -1,18 +1,18 @@
 package org.jusnga.pageviews;
 
-import org.joda.time.LocalDate;
+import com.google.common.collect.Maps;
 import org.jusnga.pageviews.cache.ResultCache;
 import org.jusnga.pageviews.cache.filesystem.TopViewsFSCache;
+import org.jusnga.pageviews.processors.TopViewsProcessor;
 import org.jusnga.pageviews.sources.PageViewsSource;
 import org.jusnga.pageviews.sources.dumpswikimedia.WikimediaPageViewsSource;
-import org.jusnga.pageviews.processors.TopViewsProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class DefaultPageViewsService implements PageViewsService {
@@ -45,5 +45,19 @@ public class DefaultPageViewsService implements PageViewsService {
         topPageViewsCache.cacheResult(dateAndHour, topPageViews);
 
         return topPageViews;
+    }
+
+    @Override
+    public Map<DateAndHour, TopPageViews> getTopPageViews(DateAndHour from, DateAndHour to) {
+        List<DateAndHour> dateAndHours = DateAndHour.getDateAndHours(from, to);
+
+        Map<DateAndHour, TopPageViews> results = Maps.newHashMap();
+        for (DateAndHour dateAndHour: dateAndHours) {
+            TopPageViews topPageViews = getTopPageViews(dateAndHour);
+
+            results.put(dateAndHour, topPageViews);
+        }
+
+        return results;
     }
 }

@@ -1,8 +1,13 @@
 package org.jusnga.pageviews;
 
+import org.joda.time.Hours;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
+
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public final class DateAndHour {
     private final LocalDate date;
@@ -16,8 +21,9 @@ public final class DateAndHour {
         this.date = date;
     }
 
-    public int getHour() {
-        return hour;
+    public DateAndHour(LocalDateTime dateTime) {
+        this.date = dateTime.toLocalDate();
+        this.hour = dateTime.getHourOfDay();
     }
 
     public LocalDate getDate() {
@@ -40,10 +46,19 @@ public final class DateAndHour {
                 '}';
     }
 
-    public static LocalDateTime toLocalDateTime(DateAndHour dateAndHour) {
-        LocalDate date = dateAndHour.getDate();
-        int hour = dateAndHour.getHour();
-
+    public LocalDateTime getLocalDateTime() {
         return date.toLocalDateTime(LocalTime.MIDNIGHT).plusHours(hour);
+    }
+
+    public static List<DateAndHour> getDateAndHours(DateAndHour from, DateAndHour to) {
+        LocalDateTime fromDateTime = from.getLocalDateTime();
+        LocalDateTime toDateTime = to.getLocalDateTime();
+
+        int hoursBetween = Hours.hoursBetween(fromDateTime, toDateTime).getHours();
+
+        return IntStream.range(0, hoursBetween + 1)
+                .mapToObj(fromDateTime::plusHours)
+                .map(DateAndHour::new)
+                .collect(Collectors.toList());
     }
 }

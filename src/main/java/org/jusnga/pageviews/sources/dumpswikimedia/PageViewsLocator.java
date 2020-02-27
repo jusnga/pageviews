@@ -26,10 +26,6 @@ public final class PageViewsLocator {
         return new URL(monthPath, getFileName());
     }
 
-    public LocalDateTime getDateTime() {
-        return dateTime;
-    }
-
     public int getYear() {
         return dateTime.getYear();
     }
@@ -43,7 +39,7 @@ public final class PageViewsLocator {
     }
 
     public static PageViewsLocator getLocator(DateAndHour dateAndHour) {
-        LocalDateTime dateTime = DateAndHour.toLocalDateTime(dateAndHour);
+        LocalDateTime dateTime = dateAndHour.getLocalDateTime();
 
         return new PageViewsLocator(dateTime);
     }

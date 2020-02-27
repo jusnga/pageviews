@@ -1,6 +1,7 @@
 package org.jusnga.pageviews.sources.dumpswikimedia;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import org.apache.commons.io.FileUtils;
 import org.jusnga.pageviews.DateAndHour;
 import org.jusnga.pageviews.PageViews;
@@ -14,6 +15,7 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Map;
 
 public class WikimediaPageViewsSource implements PageViewsSource {
     private final Path downloadLocation;
@@ -51,6 +53,16 @@ public class WikimediaPageViewsSource implements PageViewsSource {
         }
 
         return Lists.newArrayList();
+    }
+
+    @Override
+    public Map<DateAndHour, List<PageViews>> getPageViews(List<DateAndHour> dateAndHours) {
+        Map<DateAndHour, List<PageViews>> pageViews = Maps.newHashMap();
+        for (DateAndHour dateAndHour: dateAndHours) {
+            pageViews.put(dateAndHour, getPageViews(dateAndHour));
+        }
+
+        return pageViews;
     }
 
     private Path getFilePath(PageViewsLocator locator) {

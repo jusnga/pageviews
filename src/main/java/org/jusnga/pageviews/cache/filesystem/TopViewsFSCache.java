@@ -60,7 +60,7 @@ public class TopViewsFSCache implements ResultCache<DateAndHour, TopPageViews> {
     }
 
     private String getTopViewsFileName(DateAndHour key) {
-        String fileName = DateAndHour.toLocalDateTime(key).toString(TOP_VIEWS_DATE_TIME_FMT);
+        String fileName = key.getLocalDateTime().toString(TOP_VIEWS_DATE_TIME_FMT);
 
         return String.format(TOP_VIEWS_FILE_FMT, fileName);
     }
