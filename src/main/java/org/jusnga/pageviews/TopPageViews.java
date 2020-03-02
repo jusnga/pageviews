@@ -22,8 +22,4 @@ public class TopPageViews {
                 "topViews=" + topViews +
                 '}';
     }
-
-    public static TopPageViews from(List<PageViews> pageViews) {
-        return new TopPageViews(pageViews);
-    }
 }

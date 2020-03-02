@@ -26,10 +26,6 @@ public final class DateAndHour {
         this.hour = dateTime.getHourOfDay();
     }
 
-    public LocalDate getDate() {
-        return date;
-    }
-
     public int getYear() {
         return date.getYear();
     }

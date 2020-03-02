@@ -2,7 +2,11 @@ package org.jusnga.pageviews;
 
 import java.util.Map;
 
-public interface PageViewsService {
+/**
+ * Kept things super simple here, reality is that you would want to query an actual time range and get all date and hours
+ * between.
+ */
+public interface PageViewsService extends AutoCloseable {
     TopPageViews getTopPageViews(DateAndHour dateAndHour);
 
     Map<DateAndHour, TopPageViews> getTopPageViews(DateAndHour from, DateAndHour to);
