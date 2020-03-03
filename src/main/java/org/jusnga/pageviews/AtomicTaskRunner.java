@@ -9,8 +9,10 @@ import java.util.concurrent.*;
 import java.util.stream.Collectors;
 
 /**
- * Very basic task runner that atomically completes all tasks or not at all, doing this to keep things simple due to
- * time constraints. Ideally the kind of parallel tasks that go through this should go through something like yarn/spark.
+ * Very basic task runner that atomically completes all tasks or none at all, doing this to keep things simple due to
+ * time constraints. Could make an argument for returning partial results, but given its a toy problem it's difficult
+ * to make an informed decision on whether that would be good or bad.
+ * Ideally the kind of parallel tasks that go through this should go through something like yarn/spark.
  * @param <K>
  * @param <V>
  */

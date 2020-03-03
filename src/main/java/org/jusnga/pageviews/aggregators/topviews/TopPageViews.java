@@ -1,6 +1,7 @@
-package org.jusnga.pageviews;
+package org.jusnga.pageviews.aggregators.topviews;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jusnga.pageviews.PageViews;
 
 import java.util.List;
 

@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.Iterator;
 import java.util.Optional;
@@ -26,7 +27,8 @@ public final class WikimediaPageViewsResource implements PageViewsResource {
     public Iterator<PageViews> iterator() throws IOException {
         InputStream fileStream = new FileInputStream(filePath.toFile());
         InputStream gzipStream = new GZIPInputStream(fileStream);
-        reader = new BufferedReader(new InputStreamReader(gzipStream));
+        Reader decoder = new InputStreamReader(gzipStream);
+        reader = new BufferedReader(decoder);
         return new PageViewsIterator(reader.lines().iterator());
     }
 

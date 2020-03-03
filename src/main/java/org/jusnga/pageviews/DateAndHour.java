@@ -34,14 +34,6 @@ public final class DateAndHour {
         return date.getMonthOfYear();
     }
 
-    @Override
-    public String toString() {
-        return "DateAndHour{" +
-                "date=" + date +
-                ", hour=" + hour +
-                '}';
-    }
-
     public LocalDateTime getLocalDateTime() {
         return date.toLocalDateTime(LocalTime.MIDNIGHT).plusHours(hour);
     }
@@ -56,5 +48,13 @@ public final class DateAndHour {
                 .mapToObj(fromDateTime::plusHours)
                 .map(DateAndHour::new)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public String toString() {
+        return "DateAndHour{" +
+                "date=" + date +
+                ", hour=" + hour +
+                '}';
     }
 }

@@ -1,7 +1,5 @@
 package org.jusnga.pageviews.sources.dumpswikimedia;
 
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.joda.time.LocalDateTime;
 import org.jusnga.pageviews.DateAndHour;
@@ -24,21 +22,23 @@ import java.util.concurrent.Callable;
 import java.util.stream.Collectors;
 
 public class WikimediaPageViewsSource implements PageViewsSource {
-    private final Path downloadLocation;
+    private final Path downloadPath;
     private final AtomicTaskRunner<DateAndHour, Path> downloadManager;
 
+    private static final String DOWNLOAD_DIR_NAME = "downloads";
     private static final String PAGE_VIEW_DATE_FMT = "yyyyMMdd-HHmmss";
     private static final String PAGE_VIEW_FILE_FMT = "pageviews-%s.gz";
     private static final String YEAR_MONTH_PATH_FMT = "yyyy-MM";
     private static final String BASE_URL = "https://dumps.wikimedia.org/other/pageviews/";
     private static final Logger logger = LoggerFactory.getLogger(WikimediaPageViewsSource.class);
 
-    public WikimediaPageViewsSource(Path downloadLocation, int numParallelDownloads) throws IOException {
-        if (!Files.exists(downloadLocation)) {
-            Files.createDirectories(downloadLocation);
+    public WikimediaPageViewsSource(Path workspace, int numParallelDownloads) throws IOException {
+        Path downloadPath = workspace.resolve(DOWNLOAD_DIR_NAME);
+        if (!Files.exists(downloadPath)) {
+            Files.createDirectories(downloadPath);
         }
 
-        this.downloadLocation = downloadLocation;
+        this.downloadPath = downloadPath;
         this.downloadManager = new AtomicTaskRunner<>(numParallelDownloads);
     }
 
@@ -116,7 +116,7 @@ public class WikimediaPageViewsSource implements PageViewsSource {
     }
 
     private Path getLocalFilePath(DateAndHour dateAndHour) {
-        return downloadLocation.resolve(Integer.toString(dateAndHour.getYear()))
+        return downloadPath.resolve(Integer.toString(dateAndHour.getYear()))
                 .resolve(Integer.toString(dateAndHour.getMonth()))
                 .resolve(getFileName(dateAndHour));
     }

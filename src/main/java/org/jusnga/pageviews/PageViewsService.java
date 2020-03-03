@@ -1,5 +1,7 @@
 package org.jusnga.pageviews;
 
+import org.jusnga.pageviews.aggregators.topviews.TopPageViews;
+
 import java.util.Map;
 
 /**

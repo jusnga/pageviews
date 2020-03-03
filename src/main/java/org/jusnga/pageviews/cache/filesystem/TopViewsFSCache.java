@@ -2,7 +2,7 @@ package org.jusnga.pageviews.cache.filesystem;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jusnga.pageviews.DateAndHour;
-import org.jusnga.pageviews.TopPageViews;
+import org.jusnga.pageviews.aggregators.topviews.TopPageViews;
 import org.jusnga.pageviews.cache.ResultCache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,19 +19,22 @@ import java.util.Optional;
  * too much attention on FS perf as that's a can of complexity I would usually opt to defer to a DB.
  */
 public class TopViewsFSCache implements ResultCache<DateAndHour, TopPageViews> {
-    private final Path parentDirectory;
+    private final Path cachePath;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
+    private static final String CACHE_DIR_NAME = "topviews";
     private static final String TOP_VIEWS_FILE_FMT = "%s.topviews";
     private static final String TOP_VIEWS_DATE_TIME_FMT = "yyyyMMdd-HH";
 
     private static final Logger logger = LoggerFactory.getLogger(TopViewsFSCache.class);
 
-    public TopViewsFSCache(Path parentDirectory) throws IOException {
-        if (!Files.exists(parentDirectory)) {
-            Files.createDirectory(parentDirectory);
+    public TopViewsFSCache(Path workspace) throws IOException {
+        Path cachePath = workspace.resolve(CACHE_DIR_NAME);
+        if (!Files.exists(cachePath)) {
+            Files.createDirectory(cachePath);
         }
-        this.parentDirectory = parentDirectory;
+
+        this.cachePath = cachePath;
     }
 
     @Override
@@ -75,7 +78,7 @@ public class TopViewsFSCache implements ResultCache<DateAndHour, TopPageViews> {
         int year = dateAndHour.getYear();
         int month = dateAndHour.getMonth();
 
-        return parentDirectory
+        return cachePath
                 .resolve(Integer.toString(year))
                 .resolve(Integer.toString(month));
     }
