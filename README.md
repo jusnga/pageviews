@@ -42,7 +42,7 @@ Unit tests, outside of the obvious tests for the parsing, filtering and aggregat
 2) Malformed inputs
 3) Failed aggregations
 
-<h5>How you’d improve on this application design?<h5>
+<h5>How you’d improve on this application design?</h5>
 
 At a high level, I think migrating this over to use a distributed compute system such as spark makes the most sense. This type of problem works well with spark as a lot of the complexities around parallel processing are abstracted away. The main thing I'd look into is a better way of ingesting the data, GZIP not being splittable means you miss out on a lot of optimizations that spark will get you. The kind of pipeline I'd look at implementing with spark would be, download -> decompress to parquet -> spark filter/aggregate. 
 
