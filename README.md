@@ -50,7 +50,7 @@ Depending on the types of queries this service would get I'd also look at cachin
 1) Index per time bucket (i.e. index per day, week or month etc), this means that you could skip reading/process entire indexes based on your query
 2) ES caching, for aggregations specifically, the shard request cache would save a lot from subsequent aggregation calls.
 
-With larger scale/more insight on query patterns you could justify using a combination of both for hot/cold access.
+With larger scale/more insight on query patterns you could justify using a combination of both for hot/cold access (ES hot, spark batch cold).
 
 Another way to model this is as a multi-stage pipeline e.g. download -> sanitise -> parse -> filter -> process, where each "stage" in the pipeline would be an independent producer/consumer, that can subscribe to any compatible producer. This allows for a number of nice functionalities, for e.g.
 1) You could start processing files as soon as they're done as opposed to waiting for all files to download
