@@ -61,6 +61,8 @@ public class PageViewsProcessor implements AutoCloseable {
                 logger.info("Processing top views for resource {}", resource);
                 Iterator<PageViews> iterator = resource.iterator();
                 iterator.forEachRemaining(pageViews -> {
+                    // I'd ideally move this out given a multi-step pipeline structure, and have each "processing" step
+                    // encapsulated as such
                     if (blacklist.isBlacklisted(pageViews)) {
                         logger.debug("Encountered blacklisted entry {}", pageViews);
                         return;

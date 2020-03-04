@@ -26,17 +26,10 @@ import java.util.Optional;
 
 /**
  * Idea here is that the downloading of the files should be decoupled from the processing of the files, this should open
- * up capabilities for more streamlined processing. I'd ideally model this as a multi-stage pipeline to
- * decouple the downloading/processing. The way this would be modelled is that
- * each "stage" in the pipeline (i.e. download -> parse -> filter -> aggregate) would be an independent producer/consumer,
- * that can subscribe to any compatible producer. This allows for a number of nice functionalities, for e.g.
- * 1) You could start processing files as soon as they're done as opposed to waiting for all files to download
- * 2) You could have multiple consumers performing different thinks in parallel, e.g. in this particular solution the file
- * is first downloaded, then read/parsed. With a URL stream you could have a consumer that sinks to a file and another
- * that parses the input stream.
+ * up capabilities for more streamlined processing as described in the README section.
  *
- * Could probably implement this as a multi threaded java application but you're almost re-inventing kafka with spark/flink,
- * for a production tool you'd probably want to leverage kafka for the messaging/durability layer and something like
+ * Could probably implement this as a multi threaded java application but  for a production tool you'd probably want to
+ * leverage kafka for the messaging/durability layer and something like
  * spark/flink for the orchestration and auto scaling (if using something like kubernetes).
  *
  * Not too familiar with flink, but I believe it's operation chaining/topology is similar to what I describe above.
@@ -106,9 +99,10 @@ public class DefaultPageViewsService implements PageViewsService {
         pageViewsProcessor.close();
     }
 
+    //Kind of a gross way to run this. Ideally this is fronted by a Http Restful server.
     public static void main(String[] args) {
         DateAndHour to = new DateAndHour(LocalDate.now().minusYears(1), 10);
-        DateAndHour from = new DateAndHour(LocalDate.now().minusYears(1), 8);
+        DateAndHour from = new DateAndHour(LocalDate.now().minusYears(1), 3);
 
         Path workspace = Paths.get("C:\\Users\\Justin\\Documents\\pageviews");
         try (PageViewsService pageViewsService = new DefaultPageViewsService(workspace)) {
@@ -117,7 +111,5 @@ public class DefaultPageViewsService implements PageViewsService {
         } catch (Exception e) {
             //do nothing
         }
-
-        int i=0;
     }
 }

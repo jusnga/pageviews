@@ -24,6 +24,7 @@ public class WikimediaDownloadTask implements Callable<Path> {
         //Probably want to configure where we download tmp files to
         Path tmpPath = Files.createTempFile("", ".tmp");
 
+        //Would want to implement retry logic here (using something like failsafe library)
         try (InputStream inputStream = url.openStream()) {
             logger.info("Starting download for {}", url);
             FileUtils.copyInputStreamToFile(inputStream, tmpPath.toFile());

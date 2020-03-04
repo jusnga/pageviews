@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class PageViewsBlacklist {
+    //Could use a bloom filter here if blacklist got too large
     private final Map<String, Set<String>> blacklist = Maps.newHashMap();
 
     public PageViewsBlacklist(Map<String, Set<String>> blacklist) {
