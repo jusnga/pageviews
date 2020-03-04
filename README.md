@@ -5,7 +5,7 @@ Assuming there's more functionality to justify the below.
 
 1) Front service with restful api (e.g. Tomcat/Jersey)
     
-    Probably host on AWS
+    Probably host on AWS.
 
 2) Configurability
     
