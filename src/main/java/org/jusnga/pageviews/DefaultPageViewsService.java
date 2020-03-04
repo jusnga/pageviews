@@ -104,7 +104,7 @@ public class DefaultPageViewsService implements PageViewsService {
         DateAndHour to = new DateAndHour(LocalDate.now().minusYears(1), 10);
         DateAndHour from = new DateAndHour(LocalDate.now().minusYears(1), 3);
 
-        Path workspace = Paths.get("C:\\Users\\Justin\\Documents\\pageviews");
+        Path workspace = Paths.get("~/tmp/pageviews");
         try (PageViewsService pageViewsService = new DefaultPageViewsService(workspace)) {
             Map<DateAndHour, TopPageViews> topViews = pageViewsService.getTopPageViews(from, to);
             System.out.println(topViews);
