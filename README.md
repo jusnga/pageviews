@@ -48,7 +48,7 @@ At a high level, I think migrating this over to use a distributed compute system
 
 Depending on the types of queries this service would get I'd also look at caching things into some fast access layer (e.g. elasticsearch, sql etc). Elasticsearch looks like a good candidate here as it's a read only workflow with timeseries data. Assuming you had other types of queries, you could even store the page views in elasticsearch and let ES do the aggregation. There are two things that would make this quite performant
 1) Index per time bucket (i.e. index per day, week or month etc), this means that you could skip reading/process entire indexes based on your query
-2) ES caching, for aggregations specifically the shard request cache would save a lot from subsequent aggregation calls.
+2) ES caching, for aggregations specifically, the shard request cache would save a lot from subsequent aggregation calls.
 
 With larger scale/more insight on query patterns you could justify using a combination of both for hot/cold access.
 
